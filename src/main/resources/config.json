@@ -1,0 +1,10 @@
+{
+  "animals": [
+    {"type": "Wolf", "count": 10},
+    {"type": "Deer", "count": 15}
+  ],
+  "plants": [
+    {"type": "Grass", "count": 50}
+  ],
+  "islandSize": {"width": 100, "height": 20}
+}
