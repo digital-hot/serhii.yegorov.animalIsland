@@ -50,15 +50,17 @@ public class Island {
     }
 
     private void updateAnimals(Location location) {
+
+        //Перевірка на виживання тварин
         // Тут можна додати логіку для оновлення стану тварин
         // На приклад, переміщення, їжа, розмноження, перевірка на виживання тощо
         for (Animal animal : new ArrayList<>(location.getAnimals())) {
             //animal.eat();
             if (animal instanceof Herbivore) {
-                ((Herbivore) animal).eat(location);
+                animal.eat(location);
             }
             if (animal instanceof Carnivore) {
-                ((Carnivore) animal).eat(location);
+                animal.eat(location);
             }
             animal.reproduce(location);
             animal.move(location, this);
