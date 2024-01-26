@@ -1,7 +1,10 @@
 package javaRush;
 
+
 public class Main {
     public static void main(String[] args) {
-        // Допоможи на др
+        // Створення і запуск симуляції
+        Simulation simulation = new Simulation(100, 20, 10); // Параметри: ширина, висота острова, кількість кроків симуляції
+        simulation.start();
     }
 }
