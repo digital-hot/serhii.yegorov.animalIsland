@@ -1,3 +1,5 @@
+package javaRush;
+
 import java.util.List;
 
 public abstract class Herbivore extends Animal {
@@ -15,17 +17,9 @@ public abstract class Herbivore extends Animal {
                 }
                 Plant plant = plants.iterator().next();
                 this.foodEaten += plant.getWeight();
-                plants.remove(plant);
+                plants.remove(plant);// Видаляємо рослину з локації після її "з'їдання"
             }
-//            Plant plant = plants.get(0); // Припустимо, травоїдний їсть першу знайдену рослину
-//            this.foodEaten += plant.getWeight();
-//            plants.remove(plant); // Видаляємо рослину з локації після її "з'їдання"
         }
     }
-//    @Override
-//    public void eat() {
-//        // Реалізація їжі для травоїдного
-//    }
 
-    // Інші методи, специфічні для травоїдних
 }

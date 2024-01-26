@@ -1,3 +1,5 @@
+package javaRush;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,5 +60,4 @@ public class Location {
         return y;
     }
 
-    // Методи для інших дій в локації, наприклад, пошук їжі, парування тварин тощо
 }

@@ -1,3 +1,5 @@
+package javaRush;
+
 import java.util.ArrayList;
 
 public class Island {

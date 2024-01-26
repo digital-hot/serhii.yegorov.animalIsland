@@ -1,3 +1,5 @@
+package javaRush;
+
 public class Plant {
     private int weight; // Вага рослини
     private static final int MAX_COUNT_PER_LOCATION = 200; // Максимальна кількість рослин в одній локації

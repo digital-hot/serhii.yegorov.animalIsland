@@ -1,3 +1,5 @@
+package javaRush;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -10,11 +12,16 @@ public abstract class Animal {
     protected int foodEaten;
     protected int reproduceCount = 0;
     protected int reproduceCountMax = 1;
+
+    private static int nextId = 0;
+    private int id;
+
     public Animal(int weight, int maxCountPerLocation, int moveSpeed, int foodNeeded) {
         this.weight = weight;
         this.maxCountPerLocation = maxCountPerLocation;
         this.moveSpeed = moveSpeed;
         this.foodNeeded = foodNeeded;
+        this.id = nextId++;
     }
 
     public abstract void eat(Location location);
@@ -34,10 +41,8 @@ public abstract class Animal {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    //break;
                 }
             }
-            //location.addAnimal(this);
         }
     }
     public void move(Location location, Island island){
@@ -53,6 +58,14 @@ public abstract class Animal {
     }
     public boolean isAlive() {
         return foodEaten >= foodNeeded;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     // Метод для симуляції втрати їжі (наприклад, в кінці кожного кроку симуляції)

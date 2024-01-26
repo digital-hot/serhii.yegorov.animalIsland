@@ -1,4 +1,4 @@
-import java.util.List;
+package javaRush;
 
 public class Wolf extends Carnivore {
     public Wolf() {
