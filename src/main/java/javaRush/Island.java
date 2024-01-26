@@ -50,8 +50,6 @@ public class Island {
     }
 
     private void updateAnimals(Location location) {
-
-        //Перевірка на виживання тварин
         // Тут можна додати логіку для оновлення стану тварин
         // На приклад, переміщення, їжа, розмноження, перевірка на виживання тощо
         for (Animal animal : new ArrayList<>(location.getAnimals())) {
@@ -68,6 +66,7 @@ public class Island {
 
     private void updatePlants(Location location) {
         //Первірка2
+        //Написали в дев
         //написали маін
         // Тут можна додати логіку для оновлення стану рослин
         // На приклад, ріст рослин, зміна їх кількості тощо
