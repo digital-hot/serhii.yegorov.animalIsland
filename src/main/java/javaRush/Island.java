@@ -53,7 +53,6 @@ public class Island {
         // Тут можна додати логіку для оновлення стану тварин
         // На приклад, переміщення, їжа, розмноження, перевірка на виживання тощо
         for (Animal animal : new ArrayList<>(location.getAnimals())) {
-            //animal.eat();
             if (animal instanceof Herbivore) {
                 ((Herbivore) animal).eat(location);
             }
@@ -62,9 +61,6 @@ public class Island {
             }
             animal.reproduce(location);
             animal.move(location, this);
-//            if (!animal.isAlive()) {
-//                location.removeAnimal(animal);
-//            }
         }
     }
 
