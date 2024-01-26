@@ -65,6 +65,7 @@ public class Island {
     }
 
     private void updatePlants(Location location) {
+        //Первірка2
         // Тут можна додати логіку для оновлення стану рослин
         // На приклад, ріст рослин, зміна їх кількості тощо
         for (Plant plant : new ArrayList<>(location.getPlants())) {
