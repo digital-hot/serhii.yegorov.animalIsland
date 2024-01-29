@@ -80,7 +80,7 @@ public class Simulation {
                 updateAnimals(location);
 
                 // Оновлення стану рослин (якщо потрібно)
-                //updatePlants(location);
+                updatePlants(location);
             }
         }
     }
@@ -106,10 +106,12 @@ public class Simulation {
     }
 
     private void updatePlants(Location location) {
-        // Тут можна додати логіку для оновлення стану рослин
-        // На приклад, ріст рослин, зміна їх кількості тощо
-        for (Plant plant : new ArrayList<>(location.getPlants())) {
-            // Логіка оновлення рослин
+
+        Random random = new Random();
+        // Розміщуємо рослину
+        for (int k = 0; k < random.nextInt(Plant.getMaxCountPerLocation()-location.getPlants().size()); k++) {
+            Plant plant = new Plant(1); // Припустимо, що всі рослини мають вагу 1
+            location.addPlant(plant);
         }
     }
 
