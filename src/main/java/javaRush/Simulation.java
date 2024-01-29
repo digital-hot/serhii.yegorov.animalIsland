@@ -1,13 +1,12 @@
 package javaRush;
 
 import org.reflections.Reflections;
-
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class Simulation {
-    private Island island;
-    private int simulationSteps;
+    private final Island island;
+    private int stateIsland;
+
 
     private static final Set<Class<? extends Animal>> listClassesAnimals = new HashSet<>();
 
@@ -27,14 +26,14 @@ public class Simulation {
     }
 
 
-    public Simulation(int width, int height, int simulationSteps) {
+    public Simulation(int width, int height) {
         this.island = new Island(width, height);
-        this.simulationSteps = simulationSteps;
         initializeIsland();
     }
 
     // Метод для ініціалізації острова з початковими тваринами та рослинами
     private void initializeIsland() {
+        System.out.println("Ініціалізація:");
         Random random = new Random();
 
         for (int i = 0; i < island.getWidth(); i++) {
@@ -50,7 +49,7 @@ public class Simulation {
                             }
                         }
                         // Розміщуємо рослину
-                        for (int k = 0; k < random.nextInt(200); k++) {
+                        for (int k = 0; k < random.nextInt(Plant.getMaxCountPerLocation()); k++) {
                             Plant plant = new Plant(1); // Припустимо, що всі рослини мають вагу 1
                             island.getLocation(i, j).addPlant(plant);
                         }
@@ -58,15 +57,59 @@ public class Simulation {
                 }
             }
         }
+        displayIslandState();
     }
 
     // Запуск симуляції
     public void start() {
-        for (int step = 0; step < simulationSteps; step++) {
-            displayIslandState();
-            System.out.println("javaRush.Simulation Step: " + (step + 1));
-            island.update();
-            //displayIslandState(); // Виведення стану острова
+        for (int i = 0; i < 5; i++) {
+            System.out.println("День: " + (stateIsland++)+1);
+            updateIsland();
+            displayIslandState(); // Виведення стану острова
+        }
+    }
+
+
+    public void updateIsland() {
+        // Прохід по всім локаціям острова
+        for (int i = 0; i < island.getWidth(); i++) {
+            for (int j = 0; j < island.getHeight(); j++) {
+                Location location = island.getLocation(i,j);
+
+                // Оновлення стану тварин в кожній локації
+                updateAnimals(location);
+
+                // Оновлення стану рослин (якщо потрібно)
+                //updatePlants(location);
+            }
+        }
+    }
+
+    // Метод для оновлення стану острова (наприклад, для пересування тварин, росту рослин тощо)
+    private void updateAnimals(Location location) {
+        for (Animal animal : new ArrayList<>(location.getAnimals())) {
+            if (animal instanceof Herbivore) {
+                animal.eat(location);
+            }
+            if (animal instanceof Carnivore) {
+                animal.eat(location);
+            }
+            animal.reproduce(location);
+            animal.metabolize();
+            if (!animal.isAlive()) {
+                location.removeAnimal(animal);
+            }else {
+                animal.move(location, island);
+            }
+
+        }
+    }
+
+    private void updatePlants(Location location) {
+        // Тут можна додати логіку для оновлення стану рослин
+        // На приклад, ріст рослин, зміна їх кількості тощо
+        for (Plant plant : new ArrayList<>(location.getPlants())) {
+            // Логіка оновлення рослин
         }
     }
 
@@ -82,13 +125,16 @@ public class Simulation {
             for (int j = 0; j < island.getHeight(); j++) {
                 Location location = island.getLocation(i, j);
 
+                int locationCountPlant = location.getPlants().size();
                 for (Animal animal : location.getAnimals()) {
                     if (animal instanceof Wolf) {
                         wolfCount++;
                     } else if (animal instanceof Horse) {
                         horseCount++;
                     }
-                    System.out.println("Адреса "+i+":"+j+" "+animal.getId()+" "+animal.getClass().getSimpleName() + " вага " + animal.getWeight());
+                    System.out.println("День:"+stateIsland+"; локація: "+i+":"+j+"; "+"рослин: "+locationCountPlant+"; "+animal.getId()
+                            +" "+animal.getClass().getSimpleName() +"; насиченість: "+ animal.getFoodEaten()+" потрібно їжі: "
+                            +animal.getFoodNeeded()+"; вага " + animal.getWeight());
                     // ... перевірка інших видів тварин ...
                 }
 
@@ -96,7 +142,7 @@ public class Simulation {
             }
         }
 
-        System.out.println("Стан острова:");
+        System.out.println("Стан острова день:" + stateIsland);
         System.out.println("Вовків: " + wolfCount);
         System.out.println("Коней: " + horseCount);
         // ... виведення інформації про інших тварин ...

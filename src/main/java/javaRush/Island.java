@@ -24,7 +24,6 @@ public class Island {
             }
         }
     }
-
     // Отримання локації за координатами
     public Location getLocation(int x, int y) {
         if (x >= 0 && x < width && y >= 0 && y < height) {
@@ -32,52 +31,6 @@ public class Island {
         }
         return null; // Або можна кинути виняток, якщо координати поза межами острова
     }
-
-    // Метод для оновлення стану острова (наприклад, для пересування тварин, росту рослин тощо)
-    public void update() {
-        // Прохід по всім локаціям острова
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                Location location = locations[i][j];
-
-                // Оновлення стану тварин в кожній локації
-                updateAnimals(location);
-
-                // Оновлення стану рослин (якщо потрібно)
-                //updatePlants(location);
-            }
-        }
-    }
-
-    private void updateAnimals(Location location) {
-        // Тут можна додати логіку для оновлення стану тварин
-        // На приклад, переміщення, їжа, розмноження, перевірка на виживання тощо
-        for (Animal animal : new ArrayList<>(location.getAnimals())) {
-            if (animal instanceof Herbivore) {
-                animal.eat(location);
-            }
-            if (animal instanceof Carnivore) {
-                animal.eat(location);
-            }
-            animal.reproduce(location);
-            animal.move(location, this);
-        }
-    }
-
-    private void updatePlants(Location location) {
-        //Первірка2
-        //Написали в дев
-        //написали маін
-        //ребейс дев
-        //Ребейс мастер
-        //мердж мастер в дев
-        // Тут можна додати логіку для оновлення стану рослин
-        // На приклад, ріст рослин, зміна їх кількості тощо
-        for (Plant plant : new ArrayList<>(location.getPlants())) {
-            // Логіка оновлення рослин
-        }
-    }
-
     public int getWidth() {
         return width;
     }
@@ -94,5 +47,4 @@ public class Island {
         this.height = height;
     }
 
-    // Додаткові методи, якщо потрібно, наприклад, для виведення статистики острова
 }

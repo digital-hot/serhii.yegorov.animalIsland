@@ -28,7 +28,7 @@ public abstract class Carnivore extends Animal{
             if (this != prey && canEat(prey)) {
                 int chance = huntingProbabilities.getOrDefault(prey.getClass(), 0);
                 if (ThreadLocalRandom.current().nextInt(100) < chance) {
-                    this.foodEaten += prey.getWeight();
+                    this.foodEaten += Math.min(prey.getWeight(), this.foodNeeded);
                     location.removeAnimal(prey);
                     break; // Хижак їсть лише одну жертву за раз
                 }

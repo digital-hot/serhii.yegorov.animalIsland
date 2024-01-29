@@ -10,8 +10,7 @@ public abstract class Animal {
     protected int moveSpeed;
     protected int foodNeeded;
     protected int foodEaten;
-    protected int reproduceCount = 0;
-    protected int reproduceCountMax = 1;
+
 
     private static int nextId = 0;
     private int id;
@@ -29,19 +28,20 @@ public abstract class Animal {
     public void reproduce(Location location){
         List<Animal> animals = location.getAnimals().stream()
                 .filter(animal -> animal.getClass().equals(this.getClass()))
+                .filter(animal -> !animal.equals(this))
                 .toList();
-
         if (animals.size() < maxCountPerLocation){
             for (int i = 0; i < animals.size(); i++) {
-                if (animals.get(i).reproduceCount < animals.get(i).reproduceCountMax && !this.equals(animals.get(i))) {
-                    animals.get(i).reproduceCount++;
-                    this.reproduceCount++;
+                //if (animals.get(i).reproduceCount < animals.get(i).reproduceCountMax /*&& !this.equals(animals.get(i))*/) {
+                    //animals.get(i).reproduceCount++;
+                    //this.reproduceCount++;
                     try {
                         location.addAnimal(this.getClass().getDeclaredConstructor().newInstance());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                }
+                    break; // Репродукція лише одн за раз
+                //}
             }
         }
     }
@@ -51,26 +51,33 @@ public abstract class Animal {
         int y = random.nextInt(island.getHeight()-1);
         island.getLocation(location.getX(), location.getY()).removeAnimal(this);
         island.getLocation(x, y).addAnimal(this);
+        //TODO: переробити на випадкове переміщення тварини на одну клітинку
     }
 
     public int getWeight() {
         return weight;
     }
     public boolean isAlive() {
-        return foodEaten >= foodNeeded;
+        return foodEaten > 0;
+    }
+
+    public int getFoodEaten() {
+        return foodEaten;
+    }
+
+    public int getFoodNeeded() {
+        return foodNeeded;
     }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
+
 
     // Метод для симуляції втрати їжі (наприклад, в кінці кожного кроку симуляції)
     public void metabolize() {
-        this.foodEaten = Math.max(0, this.foodEaten - 1); // Припускаємо, що тварина втрачає 1 одиницю їжі за крок
+        this.foodEaten = this.foodEaten - 1/*Math.max(0, this.foodEaten - 1)*/; // Припускаємо, що тварина втрачає 1 одиницю їжі за крок
     }
 
     @Override
@@ -78,12 +85,23 @@ public abstract class Animal {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Animal animal = (Animal) o;
-        return weight == animal.weight && maxCountPerLocation == animal.maxCountPerLocation && moveSpeed == animal.moveSpeed && foodNeeded == animal.foodNeeded && foodEaten == animal.foodEaten && reproduceCount == animal.reproduceCount && reproduceCountMax == animal.reproduceCountMax;
+        return weight == animal.weight && maxCountPerLocation == animal.maxCountPerLocation && moveSpeed == animal.moveSpeed && foodNeeded == animal.foodNeeded && foodEaten == animal.foodEaten;
+    }
+    @Override
+    public int hashCode() {
+        return Objects.hash(weight, maxCountPerLocation, moveSpeed, foodNeeded, foodEaten);
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hash(weight, maxCountPerLocation, moveSpeed, foodNeeded, foodEaten, reproduceCount, reproduceCountMax);
+    public String toString() {
+        return "Animal{" +
+                "weight=" + weight +
+                ", maxCountPerLocation=" + maxCountPerLocation +
+                ", moveSpeed=" + moveSpeed +
+                ", foodNeeded=" + foodNeeded +
+                ", foodEaten=" + foodEaten +
+                ", id=" + id +
+                '}';
     }
 }
 
