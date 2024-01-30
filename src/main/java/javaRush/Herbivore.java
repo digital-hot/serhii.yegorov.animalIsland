@@ -3,7 +3,7 @@ package javaRush;
 import java.util.List;
 
 public abstract class Herbivore extends Animal {
-    public Herbivore(int weight, int maxCountPerLocation, int moveSpeed, int foodNeeded) {
+    public Herbivore(double weight, int maxCountPerLocation, int moveSpeed, double foodNeeded) {
         super(weight, maxCountPerLocation, moveSpeed, foodNeeded);
     }
 

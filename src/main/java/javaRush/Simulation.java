@@ -118,37 +118,30 @@ public class Simulation {
 
     // Метод для виведення стану острова на кожному кроці симуляції
     private void displayIslandState() {
-        int wolfCount = 0;
-        int horseCount = 0;
-        // ... інші змінні для різних видів тварин ...
 
-        int plantCount = 0;
+        Map<String, Long> animalCount = new HashMap<>();
+        long plantCount = 0;
 
         for (int i = 0; i < island.getWidth(); i++) {
             for (int j = 0; j < island.getHeight(); j++) {
                 Location location = island.getLocation(i, j);
-
                 int locationCountPlant = location.getPlants().size();
-                for (Animal animal : location.getAnimals()) {
-                    if (animal instanceof Wolf) {
-                        wolfCount++;
-                    } else if (animal instanceof Horse) {
-                        horseCount++;
-                    }
-                    System.out.println("День:"+stateIsland+"; локація: "+i+":"+j+"; "+"рослин: "+locationCountPlant+"; "+animal.getId()
-                            +" "+animal.getClass().getSimpleName() +"; насиченість: "+ animal.getFoodEaten()+" потрібно їжі: "
-                            +animal.getFoodNeeded()+"; вага " + animal.getWeight());
-                    // ... перевірка інших видів тварин ...
-                }
+                plantCount += locationCountPlant;
 
-                plantCount += location.getPlants().size();
+                int finalI = i;
+                int finalJ = j;
+                location.getAnimals().stream()
+                        .forEach(animal -> {
+                            animalCount.merge(animal.getClass().getSimpleName(), 1L, Long::sum);
+                            System.out.println("День:"+stateIsland+"; локація: "+ finalI +":"+ finalJ +"; "+"рослин: "+locationCountPlant+"; "+animal.getId()
+                                    +" "+animal.getClass().getSimpleName() +"; насиченість: "+ animal.getFoodEaten()+" потрібно їжі: "
+                                    +animal.getFoodNeeded()+"; вага " + animal.getWeight());
+                        });
             }
         }
 
         System.out.println("Стан острова день:" + stateIsland);
-        System.out.println("Вовків: " + wolfCount);
-        System.out.println("Коней: " + horseCount);
-        // ... виведення інформації про інших тварин ...
+        animalCount.forEach((animal, count) -> System.out.println(animal + ": " + count));
         System.out.println("Рослин: " + plantCount);
     }
 

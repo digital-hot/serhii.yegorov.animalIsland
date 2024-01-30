@@ -34,9 +34,9 @@ public abstract class Carnivore extends Animal {
 
         for (Animal prey : potentialPrey) {
             Map<String, Integer> predator = huntingProbabilities.get(this.getClass().getSimpleName());
-            if (this != prey) {
+            if (this != prey && this.foodEaten < this.foodNeeded) {
                 int chance = predator.getOrDefault(prey.getClass().getSimpleName(), 0);
-                if (ThreadLocalRandom.current().nextInt(100) < chance) {
+                if (chance > 0 && ThreadLocalRandom.current().nextInt(100) < chance) {
                     this.foodEaten += Math.min(prey.getWeight(), this.foodNeeded);
                     location.removeAnimal(prey);
                     break; // Хижак їсть лише одну жертву за раз

@@ -3,25 +3,25 @@ package javaRush;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
-
+//TODO: додати створення тварини з випадковими параметрами
 public abstract class Animal {
-    protected int weight;
+    protected double weight;
     protected int maxCountPerLocation;
     protected int moveSpeed;
-    protected int foodNeeded;
-    protected int foodEaten;
+    protected double foodNeeded;
+    protected double foodEaten;
 
 
     private static int nextId = 0;
     private int id;
 
-    public Animal(int weight, int maxCountPerLocation, int moveSpeed, int foodNeeded) {
+    public Animal(double weight, int maxCountPerLocation, int moveSpeed, double foodNeeded) {
         this.weight = weight;
         this.maxCountPerLocation = maxCountPerLocation;
         this.moveSpeed = moveSpeed;
         this.foodNeeded = foodNeeded;
         this.id = nextId++;
-        this.foodEaten = foodNeeded/2;
+        this.foodEaten = Math.round(foodNeeded / 2);
     }
 
     public abstract void eat(Location location);
@@ -52,18 +52,18 @@ public abstract class Animal {
         //TODO: переробити на випадкове переміщення тварини на одну клітинку
     }
 
-    public int getWeight() {
+    public double getWeight() {
         return weight;
     }
     public boolean isAlive() {
         return foodEaten > 0;
     }
 
-    public int getFoodEaten() {
+    public double getFoodEaten() {
         return foodEaten;
     }
 
-    public int getFoodNeeded() {
+    public double getFoodNeeded() {
         return foodNeeded;
     }
 
