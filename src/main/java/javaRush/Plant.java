@@ -13,11 +13,6 @@ public class Plant {
         return weight;
     }
 
-    // Метод для встановлення ваги рослини
-    public void setWeight(int weight) {
-        this.weight = weight;
-    }
-
     // Статичний метод для отримання максимальної кількості рослин в локації
     public static int getMaxCountPerLocation() {
         return MAX_COUNT_PER_LOCATION;

@@ -21,7 +21,6 @@ public class Simulation {
         for (Class<? extends Herbivore> herbivorous : reflectionsHerbivore.getSubTypesOf(Herbivore.class)) {
             listClassesAnimals.add(herbivorous);
         }
-        //listClassesAnimals.forEach(System.out::println);
 
     }
 
@@ -63,7 +62,7 @@ public class Simulation {
     // Запуск симуляції
     public void start() {
         for (int i = 0; i < 5; i++) {
-            System.out.println("День: " + (stateIsland++)+1);
+            System.out.println("День: " + (stateIsland++));
             updateIsland();
             displayIslandState(); // Виведення стану острова
         }
@@ -109,9 +108,11 @@ public class Simulation {
 
         Random random = new Random();
         // Розміщуємо рослину
-        for (int k = 0; k < random.nextInt(Plant.getMaxCountPerLocation()-location.getPlants().size()); k++) {
-            Plant plant = new Plant(1); // Припустимо, що всі рослини мають вагу 1
-            location.addPlant(plant);
+        if (Plant.getMaxCountPerLocation() > location.getPlants().size()) {
+            for (int k = 0; k < random.nextInt(Plant.getMaxCountPerLocation() - location.getPlants().size()); k++) {
+                Plant plant = new Plant(1); // Припустимо, що всі рослини мають вагу 1
+                location.addPlant(plant);
+            }
         }
     }
 

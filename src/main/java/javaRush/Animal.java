@@ -21,6 +21,7 @@ public abstract class Animal {
         this.moveSpeed = moveSpeed;
         this.foodNeeded = foodNeeded;
         this.id = nextId++;
+        this.foodEaten = foodNeeded/2;
     }
 
     public abstract void eat(Location location);
@@ -32,9 +33,6 @@ public abstract class Animal {
                 .toList();
         if (animals.size() < maxCountPerLocation){
             for (int i = 0; i < animals.size(); i++) {
-                //if (animals.get(i).reproduceCount < animals.get(i).reproduceCountMax /*&& !this.equals(animals.get(i))*/) {
-                    //animals.get(i).reproduceCount++;
-                    //this.reproduceCount++;
                     try {
                         location.addAnimal(this.getClass().getDeclaredConstructor().newInstance());
                     } catch (Exception e) {
@@ -72,7 +70,6 @@ public abstract class Animal {
     public int getId() {
         return id;
     }
-
 
 
     // Метод для симуляції втрати їжі (наприклад, в кінці кожного кроку симуляції)
