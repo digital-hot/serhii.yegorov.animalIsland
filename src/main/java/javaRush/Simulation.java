@@ -1,29 +1,15 @@
 package javaRush;
 
-import org.reflections.Reflections;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class Simulation {
     private final Island island;
     private int stateIsland;
-
-
-    private static final Set<Class<? extends Animal>> listClassesAnimals = new HashSet<>();
-
-    static {
-        // Ініціалізація таблиці для всіх тварин
-
-        Reflections reflectionsCarnivore = new Reflections(Carnivore.class);
-        for (Class<? extends Carnivore> predator : reflectionsCarnivore.getSubTypesOf(Carnivore.class)) {
-            listClassesAnimals.add(predator);
-        }
-        Reflections reflectionsHerbivore = new Reflections(Herbivore.class);
-        for (Class<? extends Herbivore> herbivorous : reflectionsHerbivore.getSubTypesOf(Herbivore.class)) {
-            listClassesAnimals.add(herbivorous);
-        }
-
-    }
-
+    private int countAnimals;
 
     public Simulation(int width, int height) {
         this.island = new Island(width, height);
@@ -34,10 +20,9 @@ public class Simulation {
     private void initializeIsland() {
         System.out.println("Ініціалізація:");
         Random random = new Random();
-
         for (int i = 0; i < island.getWidth(); i++) {
             for (int j = 0; j < island.getHeight(); j++) {
-                for (Class<? extends Animal> classAnimal : listClassesAnimals) {
+                for (Class<? extends Animal> classAnimal : DateAnimals.listClassesAnimals) {
                     if (random.nextDouble() < 0.1) { // 10% шанс, що у локації буде тварина або рослина
                         if (random.nextBoolean()) {
                             // Розміщуємо тварину
@@ -61,16 +46,54 @@ public class Simulation {
 
     // Запуск симуляції
     public void start() {
-        for (int i = 0; i < 5; i++) {
+
+        final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
+        final Runnable updateTask = new Runnable() {
+            public void run() {
+                System.out.println("День: " + (stateIsland++));
+                updateIsland();
+                displayIslandState(); // Виведення стану острова
+
+                if (countAnimals == 0 || stateIsland > 10) {
+                    scheduler.shutdown();
+                }
+            }
+        };
+
+        // Запуск задачі з інтервалом 10 секунда (або іншим необхідним інтервалом)
+        scheduler.scheduleAtFixedRate(updateTask, 0, 10, TimeUnit.SECONDS);
+
+        /*for (int i = 0; i < 5; i++) {
             System.out.println("День: " + (stateIsland++));
             updateIsland();
             displayIslandState(); // Виведення стану острова
-        }
+        }*/
     }
 
 
     public void updateIsland() {
+        ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+
         // Прохід по всім локаціям острова
+        for (int i = 0; i < island.getWidth(); i++) {
+            for (int j = 0; j < island.getHeight(); j++) {
+                final Location location = island.getLocation(i, j);
+                executor.submit(() -> {
+                    updateAnimals(location);
+                    updatePlants(location);
+                });
+            }
+        }
+
+        executor.shutdown();
+        try {
+            executor.awaitTermination(Long.MAX_VALUE, TimeUnit.NANOSECONDS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+
+  /*      // Прохід по всім локаціям острова
         for (int i = 0; i < island.getWidth(); i++) {
             for (int j = 0; j < island.getHeight(); j++) {
                 Location location = island.getLocation(i,j);
@@ -81,7 +104,7 @@ public class Simulation {
                 // Оновлення стану рослин (якщо потрібно)
                 updatePlants(location);
             }
-        }
+        }*/
     }
 
     // Метод для оновлення стану острова (наприклад, для пересування тварин, росту рослин тощо)
@@ -143,6 +166,7 @@ public class Simulation {
         System.out.println("Стан острова день:" + stateIsland);
         animalCount.forEach((animal, count) -> System.out.println(animal + ": " + count));
         System.out.println("Рослин: " + plantCount);
+        countAnimals = animalCount.size();
     }
 
 }

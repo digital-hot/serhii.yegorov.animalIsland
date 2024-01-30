@@ -1,0 +1,81 @@
+animal_characteristics:
+  - animal: Wolf
+    weight_kg: 50
+    max_count_per_cell: 30
+    max_movement_per_turn: 3
+    food_needed_kg: 8
+  - animal: Python
+    weight_kg: 15
+    max_count_per_cell: 30
+    max_movement_per_turn: 1
+    food_needed_kg: 3
+  - animal: Fox
+    weight_kg: 8
+    max_count_per_cell: 30
+    max_movement_per_turn: 2
+    food_needed_kg: 2
+  - animal: Bear
+    weight_kg: 500
+    max_count_per_cell: 5
+    max_movement_per_turn: 2
+    food_needed_kg: 80
+  - animal: Eagle
+    weight_kg: 6
+    max_count_per_cell: 20
+    max_movement_per_turn: 3
+    food_needed_kg: 1
+  - animal: Horse
+    weight_kg: 400
+    max_count_per_cell: 20
+    max_movement_per_turn: 4
+    food_needed_kg: 60
+  - animal: Deer
+    weight_kg: 300
+    max_count_per_cell: 20
+    max_movement_per_turn: 4
+    food_needed_kg: 50
+  - animal: Rabbit
+    weight_kg: 2
+    max_count_per_cell: 150
+    max_movement_per_turn: 2
+    food_needed_kg: 0.45
+  - animal: Mouse
+    weight_kg: 0.05
+    max_count_per_cell: 500
+    max_movement_per_turn: 1
+    food_needed_kg: 0.01
+  - animal: Goat
+    weight_kg: 60
+    max_count_per_cell: 140
+    max_movement_per_turn: 3
+    food_needed_kg: 10
+  - animal: Sheep
+    weight_kg: 70
+    max_count_per_cell: 140
+    max_movement_per_turn: 3
+    food_needed_kg: 15
+  - animal: Boar
+    weight_kg: 400
+    max_count_per_cell: 50
+    max_movement_per_turn: 2
+    food_needed_kg: 50
+  - animal: Buffalo
+    weight_kg: 700
+    max_count_per_cell: 10
+    max_movement_per_turn: 3
+    food_needed_kg: 100
+  - animal: Duck
+    weight_kg: 1
+    max_count_per_cell: 200
+    max_movement_per_turn: 4
+    food_needed_kg: 0.15
+  - animal: Caterpillar
+    weight_kg: 0.01
+    max_count_per_cell: 1000
+    max_movement_per_turn: 0
+    food_needed_kg: 0
+  - animal: Plants
+    weight_kg: 1
+    max_count_per_cell: 200
+    max_movement_per_turn: 0
+    food_needed_kg: 0

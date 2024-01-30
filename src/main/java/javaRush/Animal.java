@@ -32,7 +32,7 @@ public abstract class Animal {
                 .filter(animal -> !animal.equals(this))
                 .toList();
         if (animals.size() < maxCountPerLocation){
-            for (int i = 0; i < animals.size(); i++) {
+            for (int i = 0; i < animals.size();) {
                     try {
                         location.addAnimal(this.getClass().getDeclaredConstructor().newInstance());
                     } catch (Exception e) {
@@ -74,7 +74,7 @@ public abstract class Animal {
 
     // Метод для симуляції втрати їжі (наприклад, в кінці кожного кроку симуляції)
     public void metabolize() {
-        this.foodEaten = this.foodEaten - 1/*Math.max(0, this.foodEaten - 1)*/; // Припускаємо, що тварина втрачає 1 одиницю їжі за крок
+        this.foodEaten = this.foodEaten - 1; // Припускаємо, що тварина втрачає 1 одиницю їжі за крок
     }
 
     @Override
