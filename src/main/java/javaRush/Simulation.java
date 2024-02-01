@@ -1,6 +1,9 @@
 package javaRush;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -51,11 +54,11 @@ public class Simulation {
 
         final Runnable updateTask = new Runnable() {
             public void run() {
-                System.out.println("День: " + (stateIsland++));
+                System.out.println("День: " + (++stateIsland));
                 updateIsland();
                 displayIslandState(); // Виведення стану острова
 
-                if (countAnimals == 0 || stateIsland > 10) {
+                if (countAnimals == 0 || stateIsland > 5) {
                     scheduler.shutdown();
                 }
             }
@@ -70,7 +73,6 @@ public class Simulation {
             displayIslandState(); // Виведення стану острова
         }*/
     }
-
 
     public void updateIsland() {
         ExecutorService executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -120,7 +122,7 @@ public class Simulation {
             animal.metabolize();
             if (!animal.isAlive()) {
                 location.removeAnimal(animal);
-            }else {
+            } else {
                 animal.move(location, island);
             }
 
@@ -156,9 +158,9 @@ public class Simulation {
                 location.getAnimals().stream()
                         .forEach(animal -> {
                             animalCount.merge(animal.getClass().getSimpleName(), 1L, Long::sum);
-                            System.out.println("День:"+stateIsland+"; локація: "+ finalI +":"+ finalJ +"; "+"рослин: "+locationCountPlant+"; "+animal.getId()
-                                    +" "+animal.getClass().getSimpleName() +"; насиченість: "+ animal.getFoodEaten()+" потрібно їжі: "
-                                    +animal.getFoodNeeded()+"; вага " + animal.getWeight());
+                            System.out.println("День:" + stateIsland + "; локація: " + finalI + ":" + finalJ + "; " + "рослин: " + locationCountPlant + "; " + animal.getId()
+                                    + " " + animal.getClass().getSimpleName() + "; насиченість: " + animal.getFoodEaten() + " потрібно їжі: "
+                                    + animal.getFoodNeeded() + "; вага " + animal.getWeight());
                         });
             }
         }
